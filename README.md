@@ -1,1 +1,1 @@
-*** Digimon Game ***
+***Digimon Game***
