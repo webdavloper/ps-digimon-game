@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Container, DigimonCard } from "./styles";
+import { Card, Container } from "./styles";
 
 import data from "../../database/digimons.json";
+import { Table } from "phosphor-react";
 
 type Digimon = {
   name: string;
@@ -14,15 +15,15 @@ export function Home() {
 
   return (
     <Container>
-      <ul>
+      <Table>
         {digimons.map((digimon) => (
-          <DigimonCard key={`${digimon.name}-${new Date().getTime()}`}>
+          <Card key={`${digimon.name}-${new Date().getTime()}`}>
             <h2>{digimon.name}</h2>
             <img src={digimon.img} alt={digimon.name} />
             <span>{digimon.level}</span>
-          </DigimonCard>
+          </Card>
         ))}
-      </ul>
+      </Table>
     </Container>
   );
 }
