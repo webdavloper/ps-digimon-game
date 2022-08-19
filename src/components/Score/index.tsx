@@ -11,7 +11,7 @@ export function Score() {
       </Player>
 
       <Player>
-        <span>Melissa</span>
+        <span>Kaio</span>
         <StackSimple size={18} />
         <span>2</span>
       </Player>
