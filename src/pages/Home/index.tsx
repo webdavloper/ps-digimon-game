@@ -16,8 +16,31 @@ type Digimon = {
   level: any;
 };
 
+const messCards = () => {
+  const cards = data.filter((card, index) => index < 44);
+
+  console.log('cards', cards);
+
+  const randomNumbers: number[] = [];
+
+  while (randomNumbers.length < cards.length) {
+    const index = Math.floor(Math.random() * cards.length);
+
+    if (!randomNumbers.includes(index)) {
+      randomNumbers.push(index);
+    }
+  }
+
+  const messedCards = randomNumbers.map((num) => cards[num]);
+
+  return messedCards;
+}
+
+const randomDigimons = messCards();
+
 export function Home() {
-  const [digimons, setDigimons] = useState<Digimon[]>(data);
+  const [digimons, setDigimons] = useState<Digimon[]>(randomDigimons);
+  const [choice, setChoice] = useState<boolean>(false);
 
   return (
     <Container>
@@ -27,7 +50,8 @@ export function Home() {
             return (
               <Card key={`${digimon.name}-${new Date().getTime()}`}>
                 <CardInner
-                  visibility={"hidden"}
+                  visibility={choice ? 'visible' : 'hidden'}
+                  onClick={() => setChoice(!choice)}
                 >
                   <CardFront level={digimon.level}>
                     <h2>{digimon.name}</h2>
