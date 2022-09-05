@@ -50,14 +50,14 @@ export const CardInner = styled.div<CardInnerProps>`
   transition: transform 0.6s;
   transform-style: preserve-3d;
 
-  /* ${(props) =>
+  ${(props) =>
     props.visibility === "visible"
       ? css`
           animation: ${show} 0.6s forwards;
         `
       : css`
           animation: ${hide} 0.6s forwards;
-        `} */
+        `}
 `;
 
 interface CardFrontProps {

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 import {
   Card,
   Table,
@@ -11,66 +12,63 @@ import {
 import data from "../../database/digimons.json";
 
 type Digimon = {
+  id: number;
   name: string;
   img: string;
   level: any;
 };
 
-const messCards = () => {
-  const cards = data.filter((card, index) => index < 44);
-
-  console.log('cards', cards);
-
-  const randomNumbers: number[] = [];
-
-  while (randomNumbers.length < cards.length) {
-    const index = Math.floor(Math.random() * cards.length);
-
-    if (!randomNumbers.includes(index)) {
-      randomNumbers.push(index);
-    }
-  }
-
-  const messedCards = randomNumbers.map((num) => cards[num]);
-
-  return messedCards;
-}
-
-const randomDigimons = messCards();
-
 export function Home() {
-  const [digimons, setDigimons] = useState<Digimon[]>(randomDigimons);
+  const [digimons, setDigimons] = useState<Digimon[]>([]);
   const [choice, setChoice] = useState<boolean>(false);
+
+  useEffect(() => {
+    const cards = data.filter((_, index) => index < 22);
+
+    const pairs = cards.map((card) => {
+      const obj = structuredClone(card);
+
+      Object.assign(obj, {
+        id: obj.id + cards.length,
+      });
+
+      return obj;
+    });
+
+    const allCards = [...cards, ...pairs];
+
+    const randomCards = allCards.sort(() => 0.5 - Math.random());
+
+    setDigimons(randomCards);
+  }, []);
 
   return (
     <Container>
       <Table>
-        {digimons.map((digimon, index) => {
-          if (index < 44) {
-            return (
-              <Card key={`${digimon.name}-${new Date().getTime()}`}>
-                <CardInner
-                  visibility={choice ? 'visible' : 'hidden'}
-                  onClick={() => setChoice(!choice)}
-                >
-                  <CardFront level={digimon.level}>
-                    <h2>{digimon.name}</h2>
-                    <img src={digimon.img} alt={digimon.name} />
-                    <span>{digimon.level}</span>
-                  </CardFront>
+        {digimons.map((digimon) => {
+          return (
+            <Card key={digimon.id}>
+              <CardInner
+                visibility={choice ? "visible" : "hidden"}
+                onClick={() => setChoice(!choice)}
+              >
+                <CardFront level={digimon.level}>
+                  <h2>{digimon.name}</h2>
+                  <img src={digimon.img} alt={digimon.name} />
+                  <span>{digimon.level}</span>
+                </CardFront>
 
-                  <CardBack>
-                    <div>
-                      <span>Digimon Digimon Digimon</span>
-                      <span>Digimon Digmon</span>
-                      <span>Digimon Digimon Digimon</span>
-                      <span>Digimon Digmon</span>
-                    </div>
-                  </CardBack>
-                </CardInner>
-              </Card>
-            );
-          }
+                <CardBack>
+                  <div>
+                    <span>Digimon Digimon Digimon</span>
+                    <span>Digimon Digmon</span>
+                    <span>Digimon Digimon Digimon</span>
+                    <span>Digimon Digmon</span>
+                  </div>
+                </CardBack>
+              </CardInner>
+            </Card>
+          );
         })}
       </Table>
     </Container>
