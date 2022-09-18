@@ -7,7 +7,7 @@ export function App() {
   return (
     <Container>
       <GlobalStyles />
-      <Score />
+      <Score player1={0} player2={0} />
       <Home />
     </Container>
   );

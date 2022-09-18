@@ -11,7 +11,7 @@ export const Table = styled.ul`
   margin: 0 auto;
 
   display: grid;
-  grid-template-columns: repeat(11, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   gap: 1rem;
 `;
 
@@ -24,7 +24,7 @@ export const Card = styled.li`
 `;
 
 interface CardInnerProps {
-  visibility?: "visible" | "hidden";
+  visible?: boolean;
 }
 
 const show = keyframes`
@@ -51,7 +51,7 @@ export const CardInner = styled.div<CardInnerProps>`
   transform-style: preserve-3d;
 
   ${(props) =>
-    props.visibility === "visible"
+    props.visible
       ? css`
           animation: ${show} 0.6s forwards;
         `
