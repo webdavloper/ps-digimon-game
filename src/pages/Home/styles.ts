@@ -152,7 +152,7 @@ export const CardBack = styled(BaseCard)`
 
     span {
       white-space: nowrap;
-      pointer-events: none;
+      user-select: none;
 
       display: flex;
       font-weight: 900;
